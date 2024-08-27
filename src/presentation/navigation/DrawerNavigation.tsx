@@ -1,12 +1,14 @@
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { HomeScreen } from '../screens/home/HomeScreen';
+import { BottomTabNavigator } from './BottomTabNavigator';
 
 const Drawer = createDrawerNavigator();
 
 export const DrawerNavigation = () => {
   return (
     <Drawer.Navigator>
-{/*       <Drawer.Screen name="Feed" component={Feed} />
-      <Drawer.Screen name="Article" component={Article} /> */}
+      <Drawer.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
+      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
     </Drawer.Navigator>
   );
 };
