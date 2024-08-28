@@ -5,7 +5,7 @@ import { HamburguerMenu } from "../components/shared/HamburguerMenu";
 export const Tab1Screen = () => {
   return (
     <View>
-      {/* <HamburguerMenu /> */}
+      <HamburguerMenu />
       <Text>Tab1Screen</Text>
     </View>
   );

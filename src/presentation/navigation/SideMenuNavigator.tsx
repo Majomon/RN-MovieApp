@@ -4,9 +4,11 @@ import { BottomTabNavigator } from './BottomTabNavigator';
 
 const Drawer = createDrawerNavigator();
 
-export const DrawerNavigation = () => {
+export const SideMenuNavigator = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator screenOptions={{
+      headerShown: false,
+    }}>
       <Drawer.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
     </Drawer.Navigator>
