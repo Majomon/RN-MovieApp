@@ -14,6 +14,7 @@ yarn start
 
 ## Dependencias
 **react-native-reanimated-carousel**
+-[https://www.npmjs.com/package/react-native-reanimated-carousel]
 
 
 - [React Native Website](https://reactnative.dev) - learn more about React Native.
