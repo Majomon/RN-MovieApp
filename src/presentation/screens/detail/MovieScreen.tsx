@@ -1,5 +1,5 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import React, {useState} from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -10,12 +10,12 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {IonIcon} from '../../components';
-import {RootsStackParams} from '../../navigation/StackNavigator';
-import {globalColors} from '../../theme/theme';
-import {Cast} from '../../components/Cast';
-import {Person, PropData} from '../../interfaces/Interfaces';
-import {MovieList} from '../../components/MovieList';
+import { IonIcon } from '../../components';
+import { Cast } from '../../components/Cast';
+import { MovieList } from '../../components/MovieList';
+import { Person, PropData } from '../../interfaces/Interfaces';
+import { RootsStackParams } from '../../navigation/StackNavigator';
+import { globalColors } from '../../theme/theme';
 
 interface Props extends StackScreenProps<RootsStackParams, 'Movie'> {}
 
@@ -58,6 +58,7 @@ export const MovieScreen = ({route, navigation}: Props) => {
   ]);
 
   const {width, height} = Dimensions.get('window');
+
   return (
     <ScrollView
       contentContainerStyle={{paddingBottom: 20}}

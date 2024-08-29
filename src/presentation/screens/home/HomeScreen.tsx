@@ -1,19 +1,16 @@
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {
-  FlatList,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {IonIcon} from '../../components';
-import {globalColors} from '../../theme/theme';
 import {MovieCarousel} from '../../components/MovieCarousel';
 import {MovieList} from '../../components/MovieList';
 import {PropData} from '../../interfaces/Interfaces';
+import {RootsStackParams} from '../../navigation/StackNavigator';
+import {globalColors} from '../../theme/theme';
 
 export const HomeScreen = () => {
+  const navigation = useNavigation<NavigationProp<RootsStackParams>>();
+
   const [trending, setTrending] = useState<PropData[]>([
     {
       id: 1,
@@ -92,7 +89,7 @@ export const HomeScreen = () => {
           <Text style={styles.text}>
             <Text style={{color: globalColors.text}}>M</Text>ovies
           </Text>
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate('Search')}>
             <IonIcon name="search-outline" size={30} color="white" />
           </Pressable>
         </View>

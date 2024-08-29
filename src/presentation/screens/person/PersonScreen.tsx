@@ -12,14 +12,40 @@ import {
 import {IonIcon} from '../../components';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
+import {MovieList} from '../../components/MovieList';
+import {PropData} from '../../interfaces/Interfaces';
 
 const {width, height} = Dimensions.get('window');
 
 export const PersonScreen = ({}) => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [personMovies, setPersonMovies] = useState([1, 2, 3, 4]);
-
+  const [personMovies, setPersonMovies] = useState<PropData[]>([
+    {
+      id: 1,
+      title: 'Title1asdasdasdasd',
+      description: 'Algo-1',
+      img: require('../../../assets/casafantasmas.webp'),
+    },
+    {
+      id: 2,
+      title: 'Title2',
+      description: 'Algo-2',
+      img: require('../../../assets/chivas-marvel.webp'),
+    },
+    {
+      id: 3,
+      title: 'Title3',
+      description: 'Algo-3',
+      img: require('../../../assets/deadpool.webp'),
+    },
+    {
+      id: 4,
+      title: 'Title4',
+      description: 'Algo-4',
+      img: require('../../../assets/starwars.webp'),
+    },
+  ]);
   return (
     <ScrollView
       style={{flex: 1, backgroundColor: '#191919'}}
@@ -168,7 +194,7 @@ export const PersonScreen = ({}) => {
         </View>
 
         {/* Movies */}
-        <View></View>
+        <MovieList data={personMovies} title='Movies' hideSeeAll/>
       </View>
     </ScrollView>
   );
