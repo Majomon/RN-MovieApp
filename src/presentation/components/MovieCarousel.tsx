@@ -12,7 +12,6 @@ interface Props {
 const {width, height} = Dimensions.get('window');
 
 export const MovieCarousel = ({data}: Props) => {
-
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
 
   const handleClick = (id: number) => {
@@ -52,7 +51,7 @@ const MovieCard = ({item, handleClick}: MovieCardProp) => {
       <Image
         source={item.img}
         style={{
-          width: width * 0.9,
+          width: width ,
           height: height * 0.5,
           borderRadius: 10,
         }}

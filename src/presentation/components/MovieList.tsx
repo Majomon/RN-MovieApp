@@ -15,9 +15,10 @@ import {RootsStackParams} from '../navigation/StackNavigator';
 interface Props {
   data: PropData[];
   title: string;
+  hideSeeAll?: boolean;
 }
 
-export const MovieList = ({data, title}: Props) => {
+export const MovieList = ({data, title, hideSeeAll}: Props) => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
   const {width, height} = Dimensions.get('window');
 
@@ -26,7 +27,7 @@ export const MovieList = ({data, title}: Props) => {
   };
 
   return (
-    <View style={{marginBottom: 4}}>
+    <View style={{marginVertical: 6}}>
       <View
         style={{
           marginHorizontal: 10,
@@ -35,9 +36,11 @@ export const MovieList = ({data, title}: Props) => {
           flexDirection: 'row',
         }}>
         <Text style={{color: 'white', fontSize: 20}}>{title}</Text>
-        <Pressable>
-          <Text style={{color: globalColors.text}}>Ver todo</Text>
-        </Pressable>
+        {!hideSeeAll && (
+          <Pressable>
+            <Text style={{color: globalColors.text}}>Ver todo</Text>
+          </Pressable>
+        )}
       </View>
       <ScrollView
         horizontal
