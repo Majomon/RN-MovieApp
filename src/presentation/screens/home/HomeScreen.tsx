@@ -2,11 +2,31 @@ import React, {useState} from 'react';
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import {IonIcon} from '../../components';
 import {globalColors} from '../../theme/theme';
-import { MovieCarousel } from '../../components/MovieCarousel';
+import {MovieCarousel} from '../../components/MovieCarousel';
+import {MovieList} from '../../components/MovieList';
+import {PropData} from '../../interfaces/Interfaces';
+
 
 
 export const HomeScreen = () => {
+  const [trending, setTrending] = useState<PropData[]>([
+    {id: 1, title: 'Title1', description: 'Algo-1',img: require("../../../assets/casafantasmas.webp")},
+    {id: 2, title: 'Title2', description: 'Algo-2',img: require("../../../assets/chivas-marvel.webp")},
+    {id: 3, title: 'Title3', description: 'Algo-3',img: require("../../../assets/deadpool.webp")},
+  ]);
 
+  const [upcoming, setUpcoming] = useState<PropData[]>([
+    {id: 1, title: 'Title1asdasdasdasd', description: 'Algo-1',img: require("../../../assets/casafantasmas.webp")},
+    {id: 2, title: 'Title2', description: 'Algo-2',img: require("../../../assets/chivas-marvel.webp")},
+    {id: 3, title: 'Title3', description: 'Algo-3',img: require("../../../assets/deadpool.webp")},
+    {id: 4, title: 'Title4', description: 'Algo-4',img: require("../../../assets/starwars.webp")},
+  ]);
+
+  const [topRated, setTopRated] = useState<PropData[]>([
+    {id: 1, title: 'Title1', description: 'Algo-1',img: require("../../../assets/casafantasmas.webp")},
+    {id: 2, title: 'Title2', description: 'Algo-2',img: require("../../../assets/chivas-marvel.webp")},
+    {id: 3, title: 'Title3', description: 'Algo-3',img: require("../../../assets/deadpool.webp")},
+  ]);
 
   return (
     <View style={styles.container}>
@@ -23,7 +43,9 @@ export const HomeScreen = () => {
         </View>
       </View>
       {/* Movies tendencia */}
-      <MovieCarousel/>
+      <MovieCarousel data={trending} />
+      {/* Movies list */}
+      <MovieList title="Upcoming" data={upcoming} />
     </View>
   );
 };
@@ -31,7 +53,7 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#000000',
   },
   menuTop: {
     flexDirection: 'row',

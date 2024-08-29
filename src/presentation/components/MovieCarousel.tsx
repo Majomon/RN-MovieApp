@@ -1,45 +1,46 @@
 import React, {useState} from 'react';
 import {Dimensions, Pressable, Text, View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
+import {MovieCardProp, PropData} from '../interfaces/Interfaces';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootsStackParams} from '../navigation/StackNavigator';
 
-interface PropData {
-  title: string;
-  description: string;
+interface Props {
+  data: PropData[];
 }
 
-interface MovieCardProp {
-  item: PropData;
-}
+export const MovieCarousel = ({data}: Props) => {
+  const {width} = Dimensions.get('window');
 
-export const MovieCarousel = () => {
-  const width = Dimensions.get('window').width;
-  const [trending, setTrending] = useState<PropData[]>([
-    {title: 'Title1', description: 'Algo-1'},
-    {title: 'Title2', description: 'Algo-2'},
-    {title: 'Title3', description: 'Algo-3'},
-  ]);
+  const navigation = useNavigation<NavigationProp<RootsStackParams>>();
+
+  const handleClick = (id: number) => {
+    navigation.navigate('Details', {movieId: id});
+  };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{height: width - 60}}>
       <Carousel
         loop
         autoPlay={true}
-        data={trending}
+        data={data}
         width={width}
-        height={width - 40}
+        height={width - 60}
         mode="parallax"
         scrollAnimationDuration={1500}
-        onSnapToItem={index => console.log('current index:', index)}
-        renderItem={({item}) => <MovieCard item={item} />}
+        // onSnapToItem={index => console.log('current index:', index)}
+        renderItem={({item}) => (
+          <MovieCard item={item} handleClick={() => handleClick(item.id)} />
+        )}
       />
     </View>
   );
 };
 
-const MovieCard = ({item}: MovieCardProp) => {
+const MovieCard = ({item, handleClick}: MovieCardProp) => {
   return (
     <Pressable
-      onPress={() => console.log(`Se clikeo el item ${item.title}`)}
+      onPress={handleClick}
       style={{
         flex: 1,
         borderWidth: 1,
