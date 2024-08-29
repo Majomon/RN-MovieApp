@@ -17,9 +17,9 @@ import {Cast} from '../../components/Cast';
 import {Person, PropData} from '../../interfaces/Interfaces';
 import {MovieList} from '../../components/MovieList';
 
-interface Props extends StackScreenProps<RootsStackParams, 'Details'> {}
+interface Props extends StackScreenProps<RootsStackParams, 'Movie'> {}
 
-export const DetailScreen = ({route, navigation}: Props) => {
+export const MovieScreen = ({route, navigation}: Props) => {
   /*   const params = useRoute<RouteProp<RootsStackParams, 'Product'>>().params; */
   const [isFavorite, setIsFavorite] = useState(false);
   const [cast, setCast] = useState<Person[]>([

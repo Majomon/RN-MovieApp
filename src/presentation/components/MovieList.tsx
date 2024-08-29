@@ -23,7 +23,7 @@ export const MovieList = ({data, title, hideSeeAll}: Props) => {
   const {width, height} = Dimensions.get('window');
 
   const handleClick = (id: number) => {
-    navigation.navigate('Details', {movieId: id});
+    navigation.navigate('Movie', {movieId: id});
   };
 
   return (
