@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import {IonIcon} from '../../components';
 import {globalColors} from '../../theme/theme';
-import {MoviesTendencia} from '../../components/MoviesTendencia';
+import { MovieCarousel } from '../../components/MovieCarousel';
+
 
 export const HomeScreen = () => {
-  const [trending, setTrending] = useState([1, 2, 3]);
+
 
   return (
     <View style={styles.container}>
@@ -21,12 +22,8 @@ export const HomeScreen = () => {
           </Pressable>
         </View>
       </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 10}}>
-        {/* Movies tendencia */}
-        <MoviesTendencia data={trending} />
-      </ScrollView>
+      {/* Movies tendencia */}
+      <MovieCarousel/>
     </View>
   );
 };
@@ -34,7 +31,7 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#000',
   },
   menuTop: {
     flexDirection: 'row',
