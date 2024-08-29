@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions, Pressable, Text, View} from 'react-native';
+import {Dimensions, Image, Pressable, Text, View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {MovieCardProp, PropData} from '../interfaces/Interfaces';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -9,8 +9,9 @@ interface Props {
   data: PropData[];
 }
 
+const {width, height} = Dimensions.get('window');
+
 export const MovieCarousel = ({data}: Props) => {
-  const {width} = Dimensions.get('window');
 
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
 
@@ -19,13 +20,13 @@ export const MovieCarousel = ({data}: Props) => {
   };
 
   return (
-    <View style={{height: width - 60}}>
+    <View style={{height: width - 20}}>
       <Carousel
         loop
         autoPlay={true}
         data={data}
         width={width}
-        height={width - 60}
+        height={height / 2.1}
         mode="parallax"
         scrollAnimationDuration={1500}
         // onSnapToItem={index => console.log('current index:', index)}
@@ -46,10 +47,17 @@ const MovieCard = ({item, handleClick}: MovieCardProp) => {
         borderWidth: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'red',
         borderRadius: 4,
       }}>
-      <Text style={{fontSize: 40, fontWeight: 'bold'}}>{item.title}</Text>
+      <Image
+        source={item.img}
+        style={{
+          width: width * 0.9,
+          height: height * 0.5,
+          borderRadius: 10,
+        }}
+        resizeMode="cover" // Ajusta el modo de redimensionamiento según tus necesidades
+      />
     </Pressable>
   );
 };
