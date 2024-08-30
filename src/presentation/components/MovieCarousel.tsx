@@ -28,7 +28,7 @@ export const MovieCarousel = ({movies}: Props) => {
         width={width}
         height={height / 2.1}
         mode="parallax"
-        scrollAnimationDuration={1500}
+        scrollAnimationDuration={3500}
         // onSnapToItem={index => console.log('current index:', index)}
         renderItem={({item}) => (
           <MovieCard item={item} handleClick={() => handleClick(item.id)} />
