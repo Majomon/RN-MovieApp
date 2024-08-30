@@ -18,9 +18,10 @@ const {width, height} = Dimensions.get('window');
 
 export const SearchScreen = () => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
-  const [results, setResults] = useState([1,2,3,5]);
+  const [results, setResults] = useState([1, 2, 3, 5]);
   const [loading, setLoading] = useState(false);
 
+  
   let movieName = 'Algo algo algo Algo algo algo Algo algo algo';
   return (
     <View style={{flex: 1, backgroundColor: '#191919'}}>

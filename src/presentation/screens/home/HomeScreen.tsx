@@ -1,5 +1,5 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {IonIcon} from '../../components';
 import {MovieCarousel} from '../../components/MovieCarousel';
@@ -8,6 +8,7 @@ import {PropData} from '../../interfaces/Interfaces';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
 import {LoadingScreen} from '../../components/LoadingScreen';
+import {fetchTrendingMovies} from '../../../actions/movieDB';
 
 export const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
@@ -82,6 +83,15 @@ export const HomeScreen = () => {
   ]);
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getTrendingMovies();
+  }, []);
+
+  const getTrendingMovies = async () => {
+    const response = await fetchTrendingMovies();
+    console.log(response?.data.results);
+  };
   return (
     <View style={styles.container}>
       {/* Search y Logo */}
