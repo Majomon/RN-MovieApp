@@ -1,8 +1,8 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {HomeScreen} from '../screens/home/HomeScreen';
 import {PersonScreen} from '../screens/person/PersonScreen';
-import {MovieScreen} from '../screens/detail/MovieScreen';
 import {SearchScreen} from '../screens/search/SearchScreen';
+import {MovieScreen} from '../screens/movie/MovieScreen';
 
 export type RootsStackParams = {
   Home: undefined;

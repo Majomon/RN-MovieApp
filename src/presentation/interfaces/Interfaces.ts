@@ -11,8 +11,3 @@ export interface MovieUpcomingProps {
   hideSeeAll?: boolean;
 }
 
-export interface Person {
-  id: number;
-  name: string;
-  character: string;
-}

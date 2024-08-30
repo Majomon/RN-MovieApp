@@ -2,18 +2,13 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import {RootsStackParams} from '../navigation/StackNavigator';
-
-interface Person {
-  id: number;
-  name: string;
-  character: string;
-}
+import {Cast} from '../../core/entities/cast.entity';
 
 interface Props {
-  cast: Person[];
+  cast: Cast[];
 }
 
-export const Cast = ({cast}: Props) => {
+export const MovieCast = ({cast}: Props) => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
 
   return (
@@ -46,10 +41,17 @@ export const Cast = ({cast}: Props) => {
                     borderRadius: 50,
                     borderWidth: 2,
                     borderColor: '#a7a1a1',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
                   <Image
                     style={{borderRadius: 16, width: 80, height: 96}}
-                    source={require('../../assets/deadpool.webp')}
+                    source={{
+                      uri:
+                        person.avatar ||
+                        require('../../assets/fallbackPersonImage.png'),
+                    }}
+                    resizeMode="cover"
                   />
                 </View>
                 <Text style={{fontSize: 12, color: 'white', marginTop: 4}}>

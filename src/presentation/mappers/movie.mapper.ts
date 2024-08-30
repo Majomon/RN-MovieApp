@@ -1,5 +1,6 @@
 import {FullMovie, Movie} from '../../core/entities/movie.entity';
-import type {MovieDBMovie, Result} from '../interfaces/MovieTrending.interface';
+import {MovieDBMovie} from '../interfaces/movie-db.responses';
+import type {Result} from '../interfaces/MovieTrending.interface';
 
 export class MovieMapper {
   static fromMovieDBResultToEntity(result: Result): Movie {
@@ -30,6 +31,8 @@ export class MovieMapper {
       productionCompanies: movie.production_companies.map(
         company => company.name,
       ),
+      status: movie.status,
+      runtime: movie.runtime,
     };
   }
 }

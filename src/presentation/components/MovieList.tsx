@@ -52,7 +52,7 @@ export const MovieList = ({movies, title, hideSeeAll}: MovieUpcomingProps) => {
                 style={{
                   width: width * 0.35,
                   height: height * 0.22,
-                  borderRadius: 4,
+                  borderRadius: 16,
                 }}
               />
               <Text style={{color: 'white'}}>

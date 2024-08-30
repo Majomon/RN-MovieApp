@@ -14,4 +14,6 @@ export interface FullMovie extends Movie {
   budget: number;
   originalTitle: string;
   productionCompanies: string[];
+  status: string;
+  runtime: number;
 }
