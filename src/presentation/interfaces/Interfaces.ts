@@ -1,15 +1,14 @@
-import {ImageSourcePropType} from 'react-native';
-
-export interface PropData {
-  id: number;
-  title: string;
-  description: string;
-  img: ImageSourcePropType;
-}
+import {Movie} from '../../core/entities/movie.entity';
 
 export interface MovieCardProp {
-  item: PropData;
+  item: Movie;
   handleClick: () => void;
+}
+
+export interface MovieUpcomingProps {
+  movies: Movie[];
+  title: string;
+  hideSeeAll?: boolean;
 }
 
 export interface Person {

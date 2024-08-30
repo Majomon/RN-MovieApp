@@ -1,97 +1,53 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  fetchTopRatedMovies,
+  fetchTrendingMovies,
+  fetchUpcomingMovies,
+} from '../../../actions/movies/movieDB';
+import {Movie} from '../../../core/entities/movie.entity';
 import {IonIcon} from '../../components';
+import {LoadingScreen} from '../../components/LoadingScreen';
 import {MovieCarousel} from '../../components/MovieCarousel';
 import {MovieList} from '../../components/MovieList';
-import {PropData} from '../../interfaces/Interfaces';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
-import {LoadingScreen} from '../../components/LoadingScreen';
-import {fetchTrendingMovies} from '../../../actions/movieDB';
 
 export const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
 
-  const [trending, setTrending] = useState<PropData[]>([
-    {
-      id: 1,
-      title: 'Title1',
-      description: 'Algo-1',
-      img: require('../../../assets/casafantasmas.webp'),
-    },
-    {
-      id: 2,
-      title: 'Title2',
-      description: 'Algo-2',
-      img: require('../../../assets/chivas-marvel.webp'),
-    },
-    {
-      id: 3,
-      title: 'Title3',
-      description: 'Algo-3',
-      img: require('../../../assets/deadpool.webp'),
-    },
-  ]);
+  const [trending, setTrending] = useState<Movie[]>([]);
 
-  const [upcoming, setUpcoming] = useState<PropData[]>([
-    {
-      id: 1,
-      title: 'Title1asdasdasdasd',
-      description: 'Algo-1',
-      img: require('../../../assets/casafantasmas.webp'),
-    },
-    {
-      id: 2,
-      title: 'Title2',
-      description: 'Algo-2',
-      img: require('../../../assets/chivas-marvel.webp'),
-    },
-    {
-      id: 3,
-      title: 'Title3',
-      description: 'Algo-3',
-      img: require('../../../assets/deadpool.webp'),
-    },
-    {
-      id: 4,
-      title: 'Title4',
-      description: 'Algo-4',
-      img: require('../../../assets/starwars.webp'),
-    },
-  ]);
+  const [upcoming, setUpcoming] = useState<Movie[]>([]);
 
-  const [topRated, setTopRated] = useState<PropData[]>([
-    {
-      id: 1,
-      title: 'Title1',
-      description: 'Algo-1',
-      img: require('../../../assets/casafantasmas.webp'),
-    },
-    {
-      id: 2,
-      title: 'Title2',
-      description: 'Algo-2',
-      img: require('../../../assets/chivas-marvel.webp'),
-    },
-    {
-      id: 3,
-      title: 'Title3',
-      description: 'Algo-3',
-      img: require('../../../assets/deadpool.webp'),
-    },
-  ]);
+  const [topRated, setTopRated] = useState<Movie[]>([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getTrendingMovies();
+    initialLoad();
   }, []);
 
-  const getTrendingMovies = async () => {
-    const response = await fetchTrendingMovies();
-    console.log(response?.data.results);
+  const initialLoad = async () => {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    const movieTrendingPromise = fetchTrendingMovies();
+    const movieUpcomingPromise = fetchUpcomingMovies();
+    const movieTopRatedPromise = fetchTopRatedMovies();
+
+    const [trendingMovies, upcomingMovies, topRatedMovies] = await Promise.all([
+      movieTrendingPromise,
+      movieUpcomingPromise,
+      movieTopRatedPromise,
+    ]);
+
+    setTrending(trendingMovies);
+    setUpcoming(upcomingMovies);
+    setTopRated(topRatedMovies);
+
+    setLoading(false);
   };
+
   return (
     <View style={styles.container}>
       {/* Search y Logo */}
@@ -113,11 +69,13 @@ export const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: 10}}>
           {/* Movies tendencia */}
-          <MovieCarousel data={trending} />
+          {trending && trending.length > 0 && (
+            <MovieCarousel movies={trending} />
+          )}
           {/* Movies list */}
-          <MovieList title="Upcoming" data={upcoming} />
+          <MovieList title="Upcoming" movies={upcoming} />
           {/* Movie Ranking */}
-          <MovieList title="Top Ranking" data={topRated} />
+          <MovieList title="Top Ranking" movies={topRated} />
         </ScrollView>
       )}
     </View>

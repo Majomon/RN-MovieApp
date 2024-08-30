@@ -7,18 +7,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import {PropData} from '../interfaces/Interfaces';
 import {globalColors} from '../theme/theme';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootsStackParams} from '../navigation/StackNavigator';
+import {MovieUpcomingProps} from '../interfaces/Interfaces';
 
-interface Props {
-  data: PropData[];
-  title: string;
-  hideSeeAll?: boolean;
-}
-
-export const MovieList = ({data, title, hideSeeAll}: Props) => {
+export const MovieList = ({movies, title, hideSeeAll}: MovieUpcomingProps) => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
   const {width, height} = Dimensions.get('window');
 
@@ -50,11 +44,11 @@ export const MovieList = ({data, title, hideSeeAll}: Props) => {
           paddingVertical: 10,
           gap: 30,
         }}>
-        {data.map((item, index) => {
+        {movies.map((item, index) => {
           return (
             <Pressable key={index} onPress={() => handleClick(item.id)}>
               <Image
-                source={item.img}
+                source={{uri: item.poster}}
                 style={{
                   width: width * 0.35,
                   height: height * 0.22,
