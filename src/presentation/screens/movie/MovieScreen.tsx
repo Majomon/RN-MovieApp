@@ -31,7 +31,7 @@ export const MovieScreen = ({route, navigation}: Props) => {
   const [cast, setCast] = useState<Cast[]>([]);
   const [fullMovie, setFullMovie] = useState<FullMovie>();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [similar, setSimilar] = useState<Movie[]>();
+  const [similar, setSimilar] = useState<Movie[]>([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -147,9 +147,11 @@ export const MovieScreen = ({route, navigation}: Props) => {
             {/* Description */}
             <Text style={styles.description}>{fullMovie?.description}</Text>
             {/* Cast */}
-            <MovieCast cast={cast} />
+            {cast.length > 0 && <MovieCast cast={cast} />}
             {/* Similar movies */}
-            <MovieList title="Similar" movies={similar ?? []} hideSeeAll />
+            {similar.length > 0 && (
+              <MovieList title="Similar" movies={similar} hideSeeAll />
+            )}
           </View>
         </ScrollView>
       )}
