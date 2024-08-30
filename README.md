@@ -16,9 +16,8 @@ yarn start
 **react-native-reanimated-carousel**
 -[https://www.npmjs.com/package/react-native-reanimated-carousel]
 
+**react-native-linear-gradient**
+-[https://www.npmjs.com/package/react-native-linear-gradient]
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+**react-native-progress**
+-[https://www.npmjs.com/package/react-native-progress]

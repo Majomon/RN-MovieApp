@@ -7,6 +7,7 @@ import {MovieList} from '../../components/MovieList';
 import {PropData} from '../../interfaces/Interfaces';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
+import {LoadingScreen} from '../../components/LoadingScreen';
 
 export const HomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
@@ -80,6 +81,7 @@ export const HomeScreen = () => {
     },
   ]);
 
+  const [loading, setLoading] = useState(false);
   return (
     <View style={styles.container}>
       {/* Search y Logo */}
@@ -94,16 +96,20 @@ export const HomeScreen = () => {
           </Pressable>
         </View>
       </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 10}}>
-        {/* Movies tendencia */}
-        <MovieCarousel data={trending} />
-        {/* Movies list */}
-        <MovieList title="Upcoming" data={upcoming} />
-        {/* Movie Ranking */}
-        <MovieList title="Top Ranking" data={topRated} />
-      </ScrollView>
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingBottom: 10}}>
+          {/* Movies tendencia */}
+          <MovieCarousel data={trending} />
+          {/* Movies list */}
+          <MovieList title="Upcoming" data={upcoming} />
+          {/* Movie Ranking */}
+          <MovieList title="Top Ranking" data={topRated} />
+        </ScrollView>
+      )}
     </View>
   );
 };

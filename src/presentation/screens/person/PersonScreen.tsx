@@ -14,12 +14,14 @@ import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
 import {MovieList} from '../../components/MovieList';
 import {PropData} from '../../interfaces/Interfaces';
+import {LoadingScreen} from '../../components/LoadingScreen';
 
 const {width, height} = Dimensions.get('window');
 
 export const PersonScreen = ({}) => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [personMovies, setPersonMovies] = useState<PropData[]>([
     {
       id: 1,
@@ -72,130 +74,136 @@ export const PersonScreen = ({}) => {
       </View>
 
       {/* Person detail */}
-      <View>
-        <View
-          style={{
-            marginTop: 18,
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <View>
           <View
             style={{
-              overflow: 'hidden',
-              width: 280,
-              height: 280,
-              borderRadius: 140,
-              borderWidth: 2,
-              borderColor: '#a7a1a1',
-              alignItems: 'center',
-              shadowColor: 'white',
-              // Esto es para IOS
-              // shadowRadius: 10,
-              // shadowOffset: {
-              //   width: 0,
-              //   height: 5,
-              // },
-              // shadowOpacity: 1,
-              elevation: 20,
+              marginTop: 18,
+              flexDirection: 'row',
+              justifyContent: 'center',
             }}>
-            <Image
+            <View
               style={{
-                borderRadius: 16,
-                width: width * 0.74,
-                height: height * 0.43,
-              }}
-              source={require('../../../assets/deadpool.webp')}
-            />
+                overflow: 'hidden',
+                width: 280,
+                height: 280,
+                borderRadius: 140,
+                borderWidth: 2,
+                borderColor: '#a7a1a1',
+                alignItems: 'center',
+                shadowColor: 'white',
+                // Esto es para IOS
+                // shadowRadius: 10,
+                // shadowOffset: {
+                //   width: 0,
+                //   height: 5,
+                // },
+                // shadowOpacity: 1,
+                elevation: 20,
+              }}>
+              <Image
+                style={{
+                  borderRadius: 16,
+                  width: width * 0.74,
+                  height: height * 0.43,
+                }}
+                source={require('../../../assets/deadpool.webp')}
+              />
+            </View>
           </View>
-        </View>
-        <View style={{marginTop: 24}}>
-          <Text
-            style={{
-              fontSize: 30,
-              fontWeight: 'bold',
-              color: 'white',
-              textAlign: 'center',
-            }}>
-            Keanu Reevs
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: '#766f6f',
-              textAlign: 'center',
-            }}>
-            London, United Kingdom
-          </Text>
-        </View>
+          <View style={{marginTop: 24}}>
+            <Text
+              style={{
+                fontSize: 30,
+                fontWeight: 'bold',
+                color: 'white',
+                textAlign: 'center',
+              }}>
+              Keanu Reevs
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                color: '#766f6f',
+                textAlign: 'center',
+              }}>
+              London, United Kingdom
+            </Text>
+          </View>
 
-        {/* Info */}
-        <View
-          style={{
-            marginHorizontal: 12,
-            marginTop: 24,
-            padding: 16,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: '#6e6565',
-            borderRadius: 50,
-          }}>
+          {/* Info */}
           <View
             style={{
-              borderRightColor: '#c5c1c1',
-              borderRightWidth: 2,
-              paddingHorizontal: 8,
+              marginHorizontal: 12,
+              marginTop: 24,
+              padding: 16,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
               alignItems: 'center',
+              backgroundColor: '#6e6565',
+              borderRadius: 50,
             }}>
-            <Text style={{color: 'white', fontWeight: 'semibold'}}>Gender</Text>
-            <Text style={{color: '#c5c1c1', fontSize: 14}}>Male</Text>
+            <View
+              style={{
+                borderRightColor: '#c5c1c1',
+                borderRightWidth: 2,
+                paddingHorizontal: 8,
+                alignItems: 'center',
+              }}>
+              <Text style={{color: 'white', fontWeight: 'semibold'}}>
+                Gender
+              </Text>
+              <Text style={{color: '#c5c1c1', fontSize: 14}}>Male</Text>
+            </View>
+            <View
+              style={{
+                borderRightColor: '#c5c1c1',
+                borderRightWidth: 2,
+                paddingHorizontal: 8,
+                alignItems: 'center',
+              }}>
+              <Text style={{color: 'white', fontWeight: 'semibold'}}>
+                Birthday
+              </Text>
+              <Text style={{color: '#c5c1c1', fontSize: 14}}>1964-09-02</Text>
+            </View>
+            <View
+              style={{
+                borderRightColor: '#c5c1c1',
+                borderRightWidth: 2,
+                paddingHorizontal: 8,
+                alignItems: 'center',
+              }}>
+              <Text style={{color: 'white', fontWeight: 'semibold'}}>
+                Know for
+              </Text>
+              <Text style={{color: '#c5c1c1', fontSize: 14}}>Acting</Text>
+            </View>
+            <View style={{paddingHorizontal: 8, alignItems: 'center'}}>
+              <Text style={{color: 'white', fontWeight: 'semibold'}}>
+                Popularity
+              </Text>
+              <Text style={{color: '#c5c1c1', fontSize: 14}}>64.23</Text>
+            </View>
           </View>
-          <View
-            style={{
-              borderRightColor: '#c5c1c1',
-              borderRightWidth: 2,
-              paddingHorizontal: 8,
-              alignItems: 'center',
-            }}>
-            <Text style={{color: 'white', fontWeight: 'semibold'}}>
-              Birthday
-            </Text>
-            <Text style={{color: '#c5c1c1', fontSize: 14}}>1964-09-02</Text>
-          </View>
-          <View
-            style={{
-              borderRightColor: '#c5c1c1',
-              borderRightWidth: 2,
-              paddingHorizontal: 8,
-              alignItems: 'center',
-            }}>
-            <Text style={{color: 'white', fontWeight: 'semibold'}}>
-              Know for
-            </Text>
-            <Text style={{color: '#c5c1c1', fontSize: 14}}>Acting</Text>
-          </View>
-          <View style={{paddingHorizontal: 8, alignItems: 'center'}}>
-            <Text style={{color: 'white', fontWeight: 'semibold'}}>
-              Popularity
-            </Text>
-            <Text style={{color: '#c5c1c1', fontSize: 14}}>64.23</Text>
-          </View>
-        </View>
 
-        {/* Biografia */}
-        <View style={{marginVertical: 24, marginHorizontal: 16, gap: 8}}>
-          <Text style={{color: 'white', fontSize: 18}}>Biografia</Text>
-          <Text style={{color: '#c5c1c1', letterSpacing: 0.4}}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
-            voluptatum, molestias assumenda accusantium neque dignissimos, ea
-            explicabo impedit et rem cumque id tenetur eligendi? Eius itaque
-            exercitationem eos natus ipsa?
-          </Text>
-        </View>
+          {/* Biografia */}
+          <View style={{marginVertical: 24, marginHorizontal: 16, gap: 8}}>
+            <Text style={{color: 'white', fontSize: 18}}>Biografia</Text>
+            <Text style={{color: '#c5c1c1', letterSpacing: 0.4}}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
+              voluptatum, molestias assumenda accusantium neque dignissimos, ea
+              explicabo impedit et rem cumque id tenetur eligendi? Eius itaque
+              exercitationem eos natus ipsa?
+            </Text>
+          </View>
 
-        {/* Movies */}
-        <MovieList data={personMovies} title='Movies' hideSeeAll/>
-      </View>
+          {/* Movies */}
+          <MovieList data={personMovies} title="Movies" hideSeeAll />
+        </View>
+      )}
     </ScrollView>
   );
 };

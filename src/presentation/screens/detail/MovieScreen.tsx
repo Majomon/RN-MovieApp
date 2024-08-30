@@ -1,5 +1,5 @@
-import { StackScreenProps } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -10,18 +10,20 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { IonIcon } from '../../components';
-import { Cast } from '../../components/Cast';
-import { MovieList } from '../../components/MovieList';
-import { Person, PropData } from '../../interfaces/Interfaces';
-import { RootsStackParams } from '../../navigation/StackNavigator';
-import { globalColors } from '../../theme/theme';
+import {IonIcon} from '../../components';
+import {Cast} from '../../components/Cast';
+import {MovieList} from '../../components/MovieList';
+import {Person, PropData} from '../../interfaces/Interfaces';
+import {RootsStackParams} from '../../navigation/StackNavigator';
+import {globalColors} from '../../theme/theme';
 
 interface Props extends StackScreenProps<RootsStackParams, 'Movie'> {}
 
 export const MovieScreen = ({route, navigation}: Props) => {
   /*   const params = useRoute<RouteProp<RootsStackParams, 'Product'>>().params; */
   const [isFavorite, setIsFavorite] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [cast, setCast] = useState<Person[]>([
     {id: 1, name: 'Keanu Reeves', character: 'John Wick'},
     {id: 2, name: 'Laurence Fishburne', character: 'Bowery King'},

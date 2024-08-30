@@ -12,12 +12,14 @@ import {
 import {IonIcon} from '../../components';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootsStackParams} from '../../navigation/StackNavigator';
+import {LoadingScreen} from '../../components/LoadingScreen';
 
 const {width, height} = Dimensions.get('window');
 
 export const SearchScreen = () => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState([1,2,3,5]);
+  const [loading, setLoading] = useState(false);
 
   let movieName = 'Algo algo algo Algo algo algo Algo algo algo';
   return (
@@ -41,7 +43,9 @@ export const SearchScreen = () => {
       </View>
 
       {/* Results */}
-      {results.length > 0 ? (
+      {loading ? (
+        <LoadingScreen />
+      ) : results.length > 0 ? (
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingHorizontal: 15}}
@@ -88,7 +92,7 @@ export const SearchScreen = () => {
       ) : (
         <View
           style={{
-            flex:1,
+            flex: 1,
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
