@@ -136,7 +136,7 @@ export const MovieScreen = ({route, navigation}: Props) => {
             {/* Cast */}
             <MovieCast cast={cast} />
             {/* Similar movies */}
-            <MovieList title="Upcoming" movies={similar ?? []} hideSeeAll />
+            <MovieList title="Similar" movies={similar ?? []} hideSeeAll />
           </View>
         </ScrollView>
       )}

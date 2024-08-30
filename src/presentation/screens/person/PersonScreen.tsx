@@ -1,5 +1,5 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -9,202 +9,210 @@ import {
   Text,
   View,
 } from 'react-native';
+import {fetchPersonMovie} from '../../../actions/people/get-person';
+import {Person} from '../../../core/entities/person.entity';
 import {IonIcon} from '../../components';
+import {LoadingScreen} from '../../components/LoadingScreen';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
-import {MovieList} from '../../components/MovieList';
-import {PropData} from '../../interfaces/Interfaces';
-import {LoadingScreen} from '../../components/LoadingScreen';
+import {formatDate} from '../../../utils/formatDate';
 
 const {width, height} = Dimensions.get('window');
+const defaultImage = require('../../../assets/fallbackPersonImage.png');
 
-export const PersonScreen = ({}) => {
-  const navigation = useNavigation<NavigationProp<RootsStackParams>>();
+interface Props extends StackScreenProps<RootsStackParams, 'Person'> {}
+
+export const PersonScreen = ({route, navigation}: Props) => {
+  // const navigation = useNavigation<NavigationProp<RootsStackParams>>();
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [personMovies, setPersonMovies] = useState<PropData[]>([
-    {
-      id: 1,
-      title: 'Title1asdasdasdasd',
-      description: 'Algo-1',
-      img: require('../../../assets/casafantasmas.webp'),
-    },
-    {
-      id: 2,
-      title: 'Title2',
-      description: 'Algo-2',
-      img: require('../../../assets/chivas-marvel.webp'),
-    },
-    {
-      id: 3,
-      title: 'Title3',
-      description: 'Algo-3',
-      img: require('../../../assets/deadpool.webp'),
-    },
-    {
-      id: 4,
-      title: 'Title4',
-      description: 'Algo-4',
-      img: require('../../../assets/starwars.webp'),
-    },
-  ]);
-  return (
-    <ScrollView
-      style={{flex: 1, backgroundColor: '#191919'}}
-      contentContainerStyle={{paddingBottom: 20}}>
-      {/* Back button */}
-      <View style={styles.buttonBack}>
-        <Pressable
-          style={{
-            backgroundColor: globalColors.background,
-            borderRadius: 10,
-          }}
-          onPress={() => navigation.goBack()}>
-          <IonIcon name="chevron-back-outline" color="white" size={30} />
-        </Pressable>
-        <Pressable
-          style={{borderRadius: 10}}
-          onPress={() => setIsFavorite(!isFavorite)}>
-          <IonIcon
-            name="heart" /*  */
-            color={isFavorite ? 'red' : 'white'}
-            size={30}
-          />
-        </Pressable>
-      </View>
+  const [personMovies, setPersonMovies] = useState<Person>();
 
-      {/* Person detail */}
+  useEffect(() => {
+    loadCast();
+  }, []);
+
+  const loadCast = async () => {
+    const person = await fetchPersonMovie(route.params.person.id);
+    setPersonMovies(person);
+    setLoading(false);
+  };
+
+  return (
+    <>
       {loading ? (
         <LoadingScreen />
       ) : (
-        <View>
-          <View
-            style={{
-              marginTop: 18,
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}>
-            <View
+        <ScrollView
+          style={{flex: 1, backgroundColor: '#191919'}}
+          contentContainerStyle={{paddingBottom: 20}}>
+          {/* Back button */}
+          <View style={styles.buttonBack}>
+            <Pressable
               style={{
-                overflow: 'hidden',
-                width: 280,
-                height: 280,
-                borderRadius: 140,
-                borderWidth: 2,
-                borderColor: '#a7a1a1',
-                alignItems: 'center',
-                shadowColor: 'white',
-                // Esto es para IOS
-                // shadowRadius: 10,
-                // shadowOffset: {
-                //   width: 0,
-                //   height: 5,
-                // },
-                // shadowOpacity: 1,
-                elevation: 20,
-              }}>
-              <Image
-                style={{
-                  borderRadius: 16,
-                  width: width * 0.74,
-                  height: height * 0.43,
-                }}
-                source={require('../../../assets/deadpool.webp')}
+                backgroundColor: globalColors.background,
+                borderRadius: 10,
+              }}
+              onPress={() => navigation.goBack()}>
+              <IonIcon name="chevron-back-outline" color="white" size={30} />
+            </Pressable>
+            <Pressable
+              style={{borderRadius: 10}}
+              onPress={() => setIsFavorite(!isFavorite)}>
+              <IonIcon
+                name="heart" /*  */
+                color={isFavorite ? 'red' : 'white'}
+                size={30}
               />
-            </View>
-          </View>
-          <View style={{marginTop: 24}}>
-            <Text
-              style={{
-                fontSize: 30,
-                fontWeight: 'bold',
-                color: 'white',
-                textAlign: 'center',
-              }}>
-              Keanu Reevs
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#766f6f',
-                textAlign: 'center',
-              }}>
-              London, United Kingdom
-            </Text>
+            </Pressable>
           </View>
 
-          {/* Info */}
-          <View
-            style={{
-              marginHorizontal: 12,
-              marginTop: 24,
-              padding: 16,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              backgroundColor: '#6e6565',
-              borderRadius: 50,
-            }}>
-            <View
-              style={{
-                borderRightColor: '#c5c1c1',
-                borderRightWidth: 2,
-                paddingHorizontal: 8,
-                alignItems: 'center',
-              }}>
-              <Text style={{color: 'white', fontWeight: 'semibold'}}>
-                Gender
-              </Text>
-              <Text style={{color: '#c5c1c1', fontSize: 14}}>Male</Text>
-            </View>
-            <View
-              style={{
-                borderRightColor: '#c5c1c1',
-                borderRightWidth: 2,
-                paddingHorizontal: 8,
-                alignItems: 'center',
-              }}>
-              <Text style={{color: 'white', fontWeight: 'semibold'}}>
-                Birthday
-              </Text>
-              <Text style={{color: '#c5c1c1', fontSize: 14}}>1964-09-02</Text>
-            </View>
-            <View
-              style={{
-                borderRightColor: '#c5c1c1',
-                borderRightWidth: 2,
-                paddingHorizontal: 8,
-                alignItems: 'center',
-              }}>
-              <Text style={{color: 'white', fontWeight: 'semibold'}}>
-                Know for
-              </Text>
-              <Text style={{color: '#c5c1c1', fontSize: 14}}>Acting</Text>
-            </View>
-            <View style={{paddingHorizontal: 8, alignItems: 'center'}}>
-              <Text style={{color: 'white', fontWeight: 'semibold'}}>
-                Popularity
-              </Text>
-              <Text style={{color: '#c5c1c1', fontSize: 14}}>64.23</Text>
-            </View>
-          </View>
+          {/* Person detail */}
+          {loading ? (
+            <LoadingScreen />
+          ) : (
+            <View>
+              <View
+                style={{
+                  marginTop: 18,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    overflow: 'hidden',
+                    width: 280,
+                    height: 280,
+                    borderRadius: 140,
+                    borderWidth: 2,
+                    borderColor: '#a7a1a1',
+                    alignItems: 'center',
+                    shadowColor: 'white',
+                    // Esto es para IOS
+                    // shadowRadius: 10,
+                    // shadowOffset: {
+                    //   width: 0,
+                    //   height: 5,
+                    // },
+                    // shadowOpacity: 1,
+                    elevation: 20,
+                  }}>
+                  <Image
+                    source={
+                      personMovies?.avatar
+                        ? {uri: personMovies?.avatar}
+                        : defaultImage
+                    }
+                    style={{
+                      borderRadius: 16,
+                      width: width * 0.74,
+                      height: height * 0.43,
+                    }}
+                    resizeMode="center"
+                  />
+                </View>
+              </View>
+              <View style={{marginTop: 24}}>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    fontWeight: 'bold',
+                    color: 'white',
+                    textAlign: 'center',
+                  }}>
+                  {personMovies?.name}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: '#766f6f',
+                    textAlign: 'center',
+                  }}>
+                  {personMovies?.place_of_birth}
+                </Text>
+              </View>
 
-          {/* Biografia */}
-          <View style={{marginVertical: 24, marginHorizontal: 16, gap: 8}}>
-            <Text style={{color: 'white', fontSize: 18}}>Biografia</Text>
-            <Text style={{color: '#c5c1c1', letterSpacing: 0.4}}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
-              voluptatum, molestias assumenda accusantium neque dignissimos, ea
-              explicabo impedit et rem cumque id tenetur eligendi? Eius itaque
-              exercitationem eos natus ipsa?
-            </Text>
-          </View>
+              {/* Info */}
+              <View
+                style={{
+                  marginHorizontal: 12,
+                  marginTop: 24,
+                  padding: 16,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  backgroundColor: '#6e6565',
+                  borderRadius: 50,
+                }}>
+                <View
+                  style={{
+                    borderRightColor: '#c5c1c1',
+                    borderRightWidth: 2,
+                    paddingHorizontal: 8,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white', fontWeight: 'semibold'}}>
+                    Gender
+                  </Text>
+                  <Text style={{color: '#c5c1c1', fontSize: 14}}>
+                    {personMovies?.gender === 1 ? 'Female' : 'Male'}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightColor: '#c5c1c1',
+                    borderRightWidth: 2,
+                    paddingHorizontal: 8,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white', fontWeight: 'semibold'}}>
+                    Birthday
+                  </Text>
+                  <Text style={{color: '#c5c1c1', fontSize: 14}}>
+                    {personMovies?.birthday
+                      ? new Date(personMovies.birthday).toLocaleDateString()
+                      : 'Fecha no disponible'}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    borderRightColor: '#c5c1c1',
+                    borderRightWidth: 2,
+                    paddingHorizontal: 8,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white', fontWeight: 'semibold'}}>
+                    Know for
+                  </Text>
+                  <Text style={{color: '#c5c1c1', fontSize: 14}}>
+                    {personMovies?.know_for}
+                  </Text>
+                </View>
+                <View style={{paddingHorizontal: 8, alignItems: 'center'}}>
+                  <Text style={{color: 'white', fontWeight: 'semibold'}}>
+                    Popularity
+                  </Text>
+                  <Text style={{color: '#c5c1c1', fontSize: 14}}>
+                    {personMovies?.popularity}
+                  </Text>
+                </View>
+              </View>
 
-          {/* Movies */}
-          <MovieList data={personMovies} title="Movies" hideSeeAll />
-        </View>
+              {/* Biografia */}
+              <View style={{marginVertical: 24, marginHorizontal: 16, gap: 8}}>
+                <Text style={{color: 'white', fontSize: 18}}>Biografia</Text>
+                <Text style={{color: '#c5c1c1', letterSpacing: 0.4}}>
+                  {personMovies?.biography}
+                </Text>
+              </View>
+
+              {/* Movies */}
+              {/* <MovieList data={personMovies} title="Movies" hideSeeAll /> */}
+            </View>
+          )}
+        </ScrollView>
       )}
-    </ScrollView>
+    </>
   );
 };
 
