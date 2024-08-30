@@ -9,13 +9,15 @@ import {
   Text,
   View,
 } from 'react-native';
-import {fetchPersonMovie} from '../../../actions/people/get-person';
+import {fetchPersonDetail} from '../../../actions/person/get-person';
+import {fetchPersonMovie} from '../../../actions/person/get-person-movie';
+import {Movie} from '../../../core/entities/movie.entity';
 import {Person} from '../../../core/entities/person.entity';
 import {IonIcon} from '../../components';
 import {LoadingScreen} from '../../components/LoadingScreen';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
-import {formatDate} from '../../../utils/formatDate';
+import {MovieList} from '../../components/MovieList';
 
 const {width, height} = Dimensions.get('window');
 const defaultImage = require('../../../assets/fallbackPersonImage.png');
@@ -25,16 +27,29 @@ interface Props extends StackScreenProps<RootsStackParams, 'Person'> {}
 export const PersonScreen = ({route, navigation}: Props) => {
   // const navigation = useNavigation<NavigationProp<RootsStackParams>>();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [personMovies, setPersonMovies] = useState<Person>();
+  const [loading, setLoading] = useState(true);
+  const [person, setPerson] = useState<Person>();
+  const [personMovies, setPersonMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
     loadCast();
   }, []);
 
   const loadCast = async () => {
-    const person = await fetchPersonMovie(route.params.person.id);
+    /*     const person = await fetchPersonDetail(route.params.person.id);
     setPersonMovies(person);
+    setLoading(false); */
+    const personPromise = fetchPersonDetail(route.params.person.id);
+    const personMoviePromise = fetchPersonMovie(route.params.person.id);
+
+    const [personResponse, personMovieResponse] = await Promise.all([
+      personPromise,
+      personMoviePromise,
+    ]);
+
+    setPerson(personResponse);
+    setPersonMovies(personMovieResponse);
+
     setLoading(false);
   };
 
@@ -99,9 +114,7 @@ export const PersonScreen = ({route, navigation}: Props) => {
                   }}>
                   <Image
                     source={
-                      personMovies?.avatar
-                        ? {uri: personMovies?.avatar}
-                        : defaultImage
+                      person?.avatar ? {uri: person?.avatar} : defaultImage
                     }
                     style={{
                       borderRadius: 16,
@@ -120,7 +133,7 @@ export const PersonScreen = ({route, navigation}: Props) => {
                     color: 'white',
                     textAlign: 'center',
                   }}>
-                  {personMovies?.name}
+                  {person?.name}
                 </Text>
                 <Text
                   style={{
@@ -128,7 +141,7 @@ export const PersonScreen = ({route, navigation}: Props) => {
                     color: '#766f6f',
                     textAlign: 'center',
                   }}>
-                  {personMovies?.place_of_birth}
+                  {person?.place_of_birth}
                 </Text>
               </View>
 
@@ -155,7 +168,7 @@ export const PersonScreen = ({route, navigation}: Props) => {
                     Gender
                   </Text>
                   <Text style={{color: '#c5c1c1', fontSize: 14}}>
-                    {personMovies?.gender === 1 ? 'Female' : 'Male'}
+                    {person?.gender === 1 ? 'Female' : 'Male'}
                   </Text>
                 </View>
                 <View
@@ -169,9 +182,9 @@ export const PersonScreen = ({route, navigation}: Props) => {
                     Birthday
                   </Text>
                   <Text style={{color: '#c5c1c1', fontSize: 14}}>
-                    {personMovies?.birthday
-                      ? new Date(personMovies.birthday).toLocaleDateString()
-                      : 'Fecha no disponible'}
+                    {person?.birthday
+                      ? new Date(person.birthday).toLocaleDateString()
+                      : 'No disponible'}
                   </Text>
                 </View>
                 <View
@@ -185,7 +198,7 @@ export const PersonScreen = ({route, navigation}: Props) => {
                     Know for
                   </Text>
                   <Text style={{color: '#c5c1c1', fontSize: 14}}>
-                    {personMovies?.know_for}
+                    {person?.know_for}
                   </Text>
                 </View>
                 <View style={{paddingHorizontal: 8, alignItems: 'center'}}>
@@ -193,7 +206,7 @@ export const PersonScreen = ({route, navigation}: Props) => {
                     Popularity
                   </Text>
                   <Text style={{color: '#c5c1c1', fontSize: 14}}>
-                    {personMovies?.popularity}
+                    {person?.popularity}
                   </Text>
                 </View>
               </View>
@@ -202,12 +215,12 @@ export const PersonScreen = ({route, navigation}: Props) => {
               <View style={{marginVertical: 24, marginHorizontal: 16, gap: 8}}>
                 <Text style={{color: 'white', fontSize: 18}}>Biografia</Text>
                 <Text style={{color: '#c5c1c1', letterSpacing: 0.4}}>
-                  {personMovies?.biography}
+                  {person?.biography || 'N/A'}
                 </Text>
               </View>
 
               {/* Movies */}
-              {/* <MovieList data={personMovies} title="Movies" hideSeeAll /> */}
+              <MovieList movies={personMovies} title="Movies" hideSeeAll />
             </View>
           )}
         </ScrollView>

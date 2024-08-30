@@ -30,7 +30,6 @@ export const HomeScreen = () => {
   }, []);
 
   const initialLoad = async () => {
-    await new Promise(resolve => setTimeout(resolve, 1500));
     const movieTrendingPromise = fetchTrendingMovies();
     const movieUpcomingPromise = fetchUpcomingMovies();
     const movieTopRatedPromise = fetchTopRatedMovies();

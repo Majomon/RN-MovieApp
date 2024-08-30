@@ -1,5 +1,5 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -22,6 +22,7 @@ import {formatDate} from '../../../utils/formatDate';
 import {LoadingScreen} from '../../components/LoadingScreen';
 import {MovieList} from '../../components/MovieList';
 import {fetchMovieSimilar} from '../../../actions/similarMovies/get-movies-similar';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface Props extends StackScreenProps<RootsStackParams, 'Movie'> {}
 
@@ -40,8 +41,14 @@ export const MovieScreen = ({route, navigation}: Props) => {
     loadMovie();
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      setLoading(true);
+      loadMovie();
+    }, [route.params.movieId]),
+  );
+
   const loadMovie = async () => {
-    await new Promise(resolve => setTimeout(resolve, 1500));
     const movieDetailPromise = fetchMovieDetails(route.params.movieId);
     const movieCastPromise = fetchMovieCast(route.params.movieId);
     const movieSimilarPromise = fetchMovieSimilar(route.params.movieId);
@@ -52,9 +59,15 @@ export const MovieScreen = ({route, navigation}: Props) => {
       movieSimilarPromise,
     ]);
 
-    setFullMovie(fullMovie);
-    setCast(castMovie);
-    setSimilar(similarMovie);
+    if (fullMovie) {
+      setFullMovie(fullMovie);
+    }
+    if (castMovie) {
+      setCast(castMovie);
+    }
+    if (similarMovie) {
+      setSimilar(similarMovie);
+    }
 
     setLoading(false);
   };
