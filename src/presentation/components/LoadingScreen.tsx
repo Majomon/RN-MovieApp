@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   container: {
     width,
     height,
-    position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

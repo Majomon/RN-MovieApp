@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -13,20 +13,45 @@ import {IonIcon} from '../../components';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {LoadingScreen} from '../../components/LoadingScreen';
+import {debounce} from 'lodash';
+import {fetchSearch} from '../../../actions/search/get-search';
+import {Movie} from '../../../core/entities/movie.entity';
 
 const {width, height} = Dimensions.get('window');
 
 export const SearchScreen = () => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();
-  const [results, setResults] = useState([1, 2, 3, 5]);
+  const [results, setResults] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
 
-  
-  let movieName = 'Algo algo algo Algo algo algo Algo algo algo';
+  const handleSearch = async (value: string) => {
+    if (value && value.length > 3) {
+      setLoading(true);
+      try {
+        const data = await fetchSearch(value);
+        setResults(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+        setResults([]);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
+      setResults([]);
+    }
+  };
+
+  //Bounce, espera unos segundos y luego hace la peticion. El array vacio es para que se active solo una vez
+  const handleTextDebounce = useCallback(debounce(handleSearch, 400), []);
+
   return (
     <View style={{flex: 1, backgroundColor: '#191919'}}>
       <View style={styles.containerSearch}>
         <TextInput
+          onChangeText={handleTextDebounce}
           placeholder="Search Movie "
           placeholderTextColor={'lightgray'}
           style={styles.textInput}
@@ -69,7 +94,9 @@ export const SearchScreen = () => {
               return (
                 <Pressable
                   key={index}
-                  onPress={() => navigation.navigate('Movie', {movieId: item})}>
+                  onPress={() =>
+                    navigation.navigate('Movie', {movieId: item.id})
+                  }>
                   <View style={{marginTop: 8}}>
                     <Image
                       style={{
@@ -77,12 +104,12 @@ export const SearchScreen = () => {
                         width: width * 0.44,
                         height: height * 0.3,
                       }}
-                      source={require('../../../assets/starwars.webp')}
+                      source={{uri: item.poster}}
                     />
                     <Text style={{color: '#74746f', marginLeft: 4}}>
-                      {movieName.length > 22
-                        ? movieName.slice(0, 22) + '...'
-                        : movieName}
+                      {results.length > 14
+                        ? item.title.slice(0, 14) + '...'
+                        : item.title}
                     </Text>
                   </View>
                 </Pressable>

@@ -39,7 +39,7 @@ export const fetchPersonDetail = async (personId: number): Promise<Person> => {
     const person = PersonMapper.fromPerdonDBEntity(data);
     return person;
   } catch (error) {
-    console.error('Error fetching movie details:', error);
+    console.error('Error fetching Person Details:', error);
     throw new Error('Error al hacer el fetch de la película');
   }
 };

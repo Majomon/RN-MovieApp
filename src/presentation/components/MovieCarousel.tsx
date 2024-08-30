@@ -56,7 +56,7 @@ const MovieCard = ({item, handleClick}: MovieCardProp) => {
           height: height * 0.5,
           borderRadius: 10,
         }}
-        resizeMode="cover"
+        resizeMode="stretch"
       />
     </Pressable>
   );

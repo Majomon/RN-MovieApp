@@ -72,9 +72,9 @@ export const HomeScreen = () => {
             <MovieCarousel movies={trending} />
           )}
           {/* Movies list */}
-          <MovieList title="Upcoming" movies={upcoming} />
+          <MovieList title="Upcoming" movies={upcoming} hideSeeAll />
           {/* Movie Ranking */}
-          <MovieList title="Top Ranking" movies={topRated} />
+          <MovieList title="Top Ranking" movies={topRated} hideSeeAll />
         </ScrollView>
       )}
     </View>

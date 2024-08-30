@@ -42,7 +42,7 @@ export const fetchPersonMovie = async (personId: number): Promise<Movie[]> => {
     );
     return actors;
   } catch (error) {
-    console.error('Error fetching movie details:', error);
+    console.error('Error fetching Person Movie:', error);
     throw new Error('Error al hacer el fetch de la película');
   }
 };

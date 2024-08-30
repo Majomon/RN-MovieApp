@@ -41,7 +41,7 @@ export const fetchMovieDetails = async (
     // Considera que el resultado puede ser un único objeto en lugar de una lista
     return MovieMapper.fromMovieDBToEntity(data);
   } catch (error) {
-    console.error('Error fetching movie details:', error);
+    console.error('Error fetching Movie ID:', error);
     throw new Error('Error al hacer el fetch de la película');
   }
 };

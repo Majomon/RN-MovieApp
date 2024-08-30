@@ -41,7 +41,7 @@ export const fetchMovieCast = async (movieId: number): Promise<Cast[]> => {
     const actors = cast.map(actor => CastMapper.fromMovieDBCastEntity(actor));
     return actors;
   } catch (error) {
-    console.error('Error fetching movie details:', error);
+    console.error('Error fetching Cast Details:', error);
     throw new Error('Error al hacer el fetch de la película');
   }
 };

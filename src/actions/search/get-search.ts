@@ -1,13 +1,12 @@
 import {THE_MOVIE_DB_KEY} from '@env';
 import axios from 'axios';
 import {Movie} from '../../core/entities/movie.entity';
-import {MovieDBMoviesResponse} from '../../presentation/interfaces/movie-db.responses';
-import {MovieMapper} from '../../presentation/mappers/movie.mapper';
+import {Search} from '../../presentation/interfaces/Search.interface';
+import {SearchMovieMapper} from '../../presentation/mappers/searchMovie.mapper';
 
 //EndPoint
 const apiBaseUrl = 'https://api.themoviedb.org/3';
-const movieDetailsEndPoint = (movieId: number) =>
-  `${apiBaseUrl}/movie/${movieId}/similar?api_key=${THE_MOVIE_DB_KEY}`;
+const searchEndPoint = `${apiBaseUrl}/search/movie?api_key=${THE_MOVIE_DB_KEY}`;
 
 interface ApiCallParams {
   [key: string]: any;
@@ -32,17 +31,21 @@ const apiCall = async <T>(
   }
 };
 
-export const fetchMovieSimilar = async (movieId: number): Promise<Movie[]> => {
-  const endpoint = movieDetailsEndPoint(movieId);
+export const fetchSearch = async (value: string): Promise<Movie[]> => {
+  const params = {
+    query: value,
+    include_adult: 'false',
+    language: 'en-US',
+    page: 1,
+  };
   try {
-    const {results} = await apiCall<MovieDBMoviesResponse>(endpoint);
-
-    const movies = results.map(movie =>
-      MovieMapper.fromMovieDBResultToEntity(movie),
+    const {results,total_results} = await apiCall<Search>(searchEndPoint, params);
+    const movieSearch = results.map(movie =>
+      SearchMovieMapper.fromPersonMovieDBResultToEntity(movie),
     );
-    return movies;
+    return movieSearch;
   } catch (error) {
-    console.error('Error fetching Movies Similar:', error);
+    console.error('Error fetching Search:', {error});
     throw new Error('Error al hacer el fetch de la película');
   }
 };

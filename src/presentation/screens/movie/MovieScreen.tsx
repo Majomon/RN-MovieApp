@@ -106,9 +106,9 @@ export const MovieScreen = ({route, navigation}: Props) => {
 
             <View>
               <Image
-                source={{uri: fullMovie?.poster}}
+                source={{uri: fullMovie?.poster || fullMovie?.backdrop}}
                 style={{width, height: height * 0.5}}
-                resizeMode="cover"
+                resizeMode="stretch"
               />
               <LinearGradient
                 colors={['transparent', 'rgba(23,23,23,0.8)', '#191919']}
