@@ -21,3 +21,7 @@ yarn start
 
 **react-native-progress**
 -[https://www.npmjs.com/package/react-native-progress]
+
+## Debounce
+**lodash**
+-[https://www.npmjs.com/package/lodash]
