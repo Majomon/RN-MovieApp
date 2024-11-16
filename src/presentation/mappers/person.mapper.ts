@@ -1,5 +1,5 @@
-import { Person } from '../../core/entities/person.entity';
-import type { PersonResponse } from '../interfaces/Person.interface';
+import {Person} from '../../core/entities/person.entity';
+import type {PersonResponse} from '../interfaces/Person.interface';
 
 export class PersonMapper {
   static fromPerdonDBEntity(actor: PersonResponse): Person {

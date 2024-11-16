@@ -1,3 +1,4 @@
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   Dimensions,
@@ -7,10 +8,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import {globalColors} from '../theme/theme';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootsStackParams} from '../navigation/StackNavigator';
 import {MovieUpcomingProps} from '../interfaces/Interfaces';
+import {RootsStackParams} from '../navigation/StackNavigator';
+import {globalColors} from '../theme/theme';
 
 export const MovieList = ({movies, title, hideSeeAll}: MovieUpcomingProps) => {
   const navigation = useNavigation<NavigationProp<RootsStackParams>>();

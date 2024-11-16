@@ -1,8 +1,8 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
-import {RootsStackParams} from '../navigation/StackNavigator';
 import {Cast} from '../../core/entities/cast.entity';
+import {RootsStackParams} from '../navigation/StackNavigator';
 
 interface Props {
   cast: Cast[];

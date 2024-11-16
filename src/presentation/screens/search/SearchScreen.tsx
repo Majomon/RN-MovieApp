@@ -1,3 +1,5 @@
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {debounce} from 'lodash';
 import React, {useCallback, useState} from 'react';
 import {
   Dimensions,
@@ -9,13 +11,11 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {IonIcon} from '../../components';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootsStackParams} from '../../navigation/StackNavigator';
-import {LoadingScreen} from '../../components/LoadingScreen';
-import {debounce} from 'lodash';
 import {fetchSearch} from '../../../actions/search/get-search';
 import {Movie} from '../../../core/entities/movie.entity';
+import {IonIcon} from '../../components';
+import {LoadingScreen} from '../../components/LoadingScreen';
+import {RootsStackParams} from '../../navigation/StackNavigator';
 
 const {width, height} = Dimensions.get('window');
 

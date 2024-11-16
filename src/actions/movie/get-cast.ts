@@ -1,9 +1,8 @@
 import {THE_MOVIE_DB_KEY} from '@env';
 import axios from 'axios';
-import {Movie} from '../../core/entities/movie.entity';
+import {Cast} from '../../core/entities/cast.entity';
 import {MovieDBCastResponse} from '../../presentation/interfaces/movie-db.responses';
 import {CastMapper} from '../../presentation/mappers/cast.mapper';
-import {Cast} from '../../core/entities/cast.entity';
 
 //EndPoint
 const apiBaseUrl = 'https://api.themoviedb.org/3';

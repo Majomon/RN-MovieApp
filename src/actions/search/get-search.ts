@@ -39,7 +39,10 @@ export const fetchSearch = async (value: string): Promise<Movie[]> => {
     page: 1,
   };
   try {
-    const {results,total_results} = await apiCall<Search>(searchEndPoint, params);
+    const {results, total_results} = await apiCall<Search>(
+      searchEndPoint,
+      params,
+    );
     const movieSearch = results.map(movie =>
       SearchMovieMapper.fromPersonMovieDBResultToEntity(movie),
     );

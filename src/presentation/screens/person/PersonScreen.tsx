@@ -15,9 +15,9 @@ import {Movie} from '../../../core/entities/movie.entity';
 import {Person} from '../../../core/entities/person.entity';
 import {IonIcon} from '../../components';
 import {LoadingScreen} from '../../components/LoadingScreen';
+import {MovieList} from '../../components/MovieList';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
-import {MovieList} from '../../components/MovieList';
 
 const {width, height} = Dimensions.get('window');
 const defaultImage = require('../../../assets/fallbackPersonImage.png');

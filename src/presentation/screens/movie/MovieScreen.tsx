@@ -1,3 +1,4 @@
+import {useFocusEffect} from '@react-navigation/native';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
@@ -10,19 +11,18 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {fetchMovieCast} from '../../../actions/movie/get-cast';
+import {fetchMovieDetails} from '../../../actions/movie/get-movie-by-id';
+import {fetchMovieSimilar} from '../../../actions/similarMovies/get-movies-similar';
+import {Cast} from '../../../core/entities/cast.entity';
+import {FullMovie, Movie} from '../../../core/entities/movie.entity';
+import {formatDate} from '../../../utils/formatDate';
 import {IonIcon} from '../../components';
+import {LoadingScreen} from '../../components/LoadingScreen';
+import {MovieCast} from '../../components/MovieCast';
+import {MovieList} from '../../components/MovieList';
 import {RootsStackParams} from '../../navigation/StackNavigator';
 import {globalColors} from '../../theme/theme';
-import {Cast} from '../../../core/entities/cast.entity';
-import {MovieCast} from '../../components/MovieCast';
-import {FullMovie, Movie} from '../../../core/entities/movie.entity';
-import {fetchMovieDetails} from '../../../actions/movie/get-movie-by-id';
-import {fetchMovieCast} from '../../../actions/movie/get-cast';
-import {formatDate} from '../../../utils/formatDate';
-import {LoadingScreen} from '../../components/LoadingScreen';
-import {MovieList} from '../../components/MovieList';
-import {fetchMovieSimilar} from '../../../actions/similarMovies/get-movies-similar';
-import {useFocusEffect} from '@react-navigation/native';
 
 interface Props extends StackScreenProps<RootsStackParams, 'Movie'> {}
 

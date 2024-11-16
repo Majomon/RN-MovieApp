@@ -1,7 +1,7 @@
-import axios from 'axios';
 import {THE_MOVIE_DB_KEY} from '@env';
-import {MovieMapper} from '../../presentation/mappers/movie.mapper';
+import axios from 'axios';
 import {MovieDBMoviesResponse} from '../../presentation/interfaces/movie-db.responses';
+import {MovieMapper} from '../../presentation/mappers/movie.mapper';
 
 //EndPoints
 const apiBaseUrl = 'https://api.themoviedb.org/3';

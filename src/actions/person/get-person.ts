@@ -1,8 +1,8 @@
-import { THE_MOVIE_DB_KEY } from '@env';
+import {THE_MOVIE_DB_KEY} from '@env';
 import axios from 'axios';
-import { Person } from '../../core/entities/person.entity';
-import { PersonResponse } from '../../presentation/interfaces/Person.interface';
-import { PersonMapper } from '../../presentation/mappers/person.mapper';
+import {Person} from '../../core/entities/person.entity';
+import {PersonResponse} from '../../presentation/interfaces/Person.interface';
+import {PersonMapper} from '../../presentation/mappers/person.mapper';
 
 //EndPoint
 const apiBaseUrl = 'https://api.themoviedb.org/3';
