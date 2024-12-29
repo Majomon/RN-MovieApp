@@ -1,4 +1,4 @@
-package com.movieapp
+package com.mauridev.infopeli
 
 import android.app.Application
 import com.facebook.react.PackageList
